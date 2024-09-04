@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
+
 import {
+  Box,
+  Flex,
   Table,
   Thead,
   Tbody,
@@ -17,7 +20,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Box,
   useDisclosure,
   Select,
   Text,
@@ -30,12 +32,12 @@ import { useDispatch } from 'react-redux';
 import { logout } from '../redux/authSlice';
 
 const AdminDashboard = () => {
-  const [employees, setEmployees] = useState([]); // To store all employees
-  const [attendanceRecords, setAttendanceRecords] = useState([]); // To store attendance records
-  const [loading, setLoading] = useState(false); // Loading state
-  const [selectedEmployee, setSelectedEmployee] = useState(null); // Currently selected employee for viewing attendance
-  const [selectedMonth, setSelectedMonth] = useState('current'); // Currently selected month
-  const [selectedRecord, setSelectedRecord] = useState(null); // Currently selected record for editing
+  const [employees, setEmployees] = useState([]); 
+  const [attendanceRecords, setAttendanceRecords] = useState([]); 
+  const [loading, setLoading] = useState(false); 
+  const [selectedEmployee, setSelectedEmployee] = useState(null); 
+  const [selectedMonth, setSelectedMonth] = useState('current'); 
+  const [selectedRecord, setSelectedRecord] = useState(null); 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
 
@@ -101,7 +103,7 @@ const AdminDashboard = () => {
       });
       toast.success('Attendance record updated successfully!');
       onClose();
-      fetchAttendanceRecords(selectedEmployee, selectedMonth); // Refresh records after update
+      fetchAttendanceRecords(selectedEmployee, selectedMonth); 
     } catch (error) {
       console.error('Error updating attendance record:', error);
       toast.error('Failed to update attendance record!');
@@ -127,44 +129,58 @@ const AdminDashboard = () => {
   };
 
   return (
-    <Box p={4}>
-      <Text fontSize="2xl" mb={4}>Admin Dashboard</Text>
-      <Button colorScheme="gray" onClick={handleLogout} mt={4}>Logout</Button>
+    <Box maxW="1200px" mx="auto">
+      <Flex alignItems="center" justifyContent="space-between" mb={6}>
+        <Text fontSize="2xl" fontWeight="bold">Admin Dashboard</Text>
+        {/* <Button colorScheme="red" onClick={handleLogout}>Logout</Button> */}
+      </Flex>
       {loading ? (
         <Spinner />
       ) : (
         <>
-          <Select
-            placeholder="Select Employee"
-            onChange={(e) => handleEmployeeSelection(e.target.value)}
-            value={selectedEmployee} // Ensure the selected employee is reflected in the dropdown
+          <Flex
+            direction={{ base: 'column', md: 'row' }}
+            alignItems="center"
+            justifyContent="flex-start"
+            mb={4}
+            gap={4} // Adds consistent spacing between items
           >
-            {employees.map((employee) => (
-              <option key={employee._id} value={employee._id}>
-                {employee.firstName} {employee.lastName} - {employee.email}
-              </option>
-            ))}
-          </Select>
-
-          <Select mt={4} value={selectedMonth} onChange={handleMonthChange}>
-            <option value="current">Current Month</option>
-            <option value="2024-08">August 2024</option>
-            <option value="2024-07">July 2024</option>
-            {/* Add more months as needed */}
-          </Select>
-
-          <Button colorScheme="teal" mb={4} mt={4}>
-            <CSVLink
-              data={attendanceRecords}
-              headers={headers}
-              filename="attendance_records.csv"
-              className="btn btn-primary"
+            <Select
+              placeholder="Select Employee"
+              onChange={(e) => handleEmployeeSelection(e.target.value)}
+              value={selectedEmployee}
+              width={{ base: '100%', md: 'auto' }} 
             >
-              Export to CSV
-            </CSVLink>
-          </Button>
+              {employees.map((employee) => (
+                <option key={employee._id} value={employee._id}>
+                  {employee.firstName} {employee.lastName} - {employee.email}
+                </option>
+              ))}
+            </Select>
 
-          <Table variant="simple" isLoading={loading}>
+            <Select
+              value={selectedMonth}
+              onChange={handleMonthChange}
+              width={{ base: '100%', md: 'auto' }} 
+            >
+              <option value="current">Current Month</option>
+              <option value="2024-08">August 2024</option>
+              <option value="2024-07">July 2024</option>
+            </Select>
+
+            <Button colorScheme="teal" mt={{ base: 2, md: 0 }}>
+              <CSVLink
+                data={attendanceRecords}
+                headers={headers}
+                filename="attendance_records.csv"
+                className="btn btn-primary"
+              >
+                Export to CSV
+              </CSVLink>
+            </Button>
+          </Flex>
+
+          <Table variant="simple">
             <Thead>
               <Tr>
                 <Th>First Name</Th>

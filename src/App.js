@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ProtectedRoute from './components/ProtectedRoute'; // Import ProtectedRoute
+import Navbar from './components/Navbar';
 
 const LandingPage = lazy(() => import('./pages/LandingPage'));
 const Login = lazy(() => import('./pages/Login'));
@@ -13,6 +14,7 @@ const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
 const App = () => {
   return (
     <Router>
+      <Navbar />
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" element={<LandingPage />} />
