@@ -32,12 +32,12 @@ import { useDispatch } from 'react-redux';
 import { logout } from '../redux/authSlice';
 
 const AdminDashboard = () => {
-  const [employees, setEmployees] = useState([]); 
-  const [attendanceRecords, setAttendanceRecords] = useState([]); 
-  const [loading, setLoading] = useState(false); 
-  const [selectedEmployee, setSelectedEmployee] = useState(null); 
-  const [selectedMonth, setSelectedMonth] = useState('current'); 
-  const [selectedRecord, setSelectedRecord] = useState(null); 
+  const [employees, setEmployees] = useState([]);
+  const [attendanceRecords, setAttendanceRecords] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState('current');
+  const [selectedRecord, setSelectedRecord] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
 
@@ -103,7 +103,7 @@ const AdminDashboard = () => {
       });
       toast.success('Attendance record updated successfully!');
       onClose();
-      fetchAttendanceRecords(selectedEmployee, selectedMonth); 
+      fetchAttendanceRecords(selectedEmployee, selectedMonth);
     } catch (error) {
       console.error('Error updating attendance record:', error);
       toast.error('Failed to update attendance record!');
@@ -121,18 +121,10 @@ const AdminDashboard = () => {
     { label: "Status", key: "status" },
   ];
 
-  const handleLogout = () => {
-    dispatch(logout());
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    toast.success('Logged out successfully!');
-  };
-
   return (
     <Box maxW="1200px" mx="auto">
       <Flex alignItems="center" justifyContent="space-between" mb={6}>
         <Text fontSize="2xl" fontWeight="bold">Admin Dashboard</Text>
-        {/* <Button colorScheme="red" onClick={handleLogout}>Logout</Button> */}
       </Flex>
       {loading ? (
         <Spinner />
@@ -143,13 +135,13 @@ const AdminDashboard = () => {
             alignItems="center"
             justifyContent="flex-start"
             mb={4}
-            gap={4} // Adds consistent spacing between items
+            gap={4}
           >
             <Select
               placeholder="Select Employee"
               onChange={(e) => handleEmployeeSelection(e.target.value)}
               value={selectedEmployee}
-              width={{ base: '100%', md: 'auto' }} 
+              width={{ base: '100%', md: 'auto' }}
             >
               {employees.map((employee) => (
                 <option key={employee._id} value={employee._id}>
@@ -161,7 +153,7 @@ const AdminDashboard = () => {
             <Select
               value={selectedMonth}
               onChange={handleMonthChange}
-              width={{ base: '100%', md: 'auto' }} 
+              width={{ base: '100%', md: 'auto' }}
             >
               <option value="current">Current Month</option>
               <option value="2024-08">August 2024</option>

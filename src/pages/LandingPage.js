@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 const LandingPage = () => {
   return (
     <Box>
-      {/* Hero Section */}
       <Flex
         align="center"
         justify="center"

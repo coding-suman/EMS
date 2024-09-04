@@ -15,12 +15,9 @@ import {
   Tr,
   Th,
   Td,
-  IconButton,
-  useToast,
 } from '@chakra-ui/react';
 import { CheckIcon, TimeIcon, RepeatIcon, CloseIcon } from '@chakra-ui/icons';
-import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../redux/authSlice';
+import { useSelector } from 'react-redux';
 import NotificationList from '../components/NotificationList';
 import axios from '../utils/axiosConfig';
 import { toast } from 'react-toastify';
@@ -30,7 +27,6 @@ const EmployeeDashboard = () => {
   const [loading, setLoading] = useState(false);
   const [attendanceData, setAttendanceData] = useState([]);
   const [filterMonth, setFilterMonth] = useState('current');
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const token = useSelector((state) => state.auth.token);
 
@@ -108,12 +104,10 @@ const EmployeeDashboard = () => {
         gap={4}
         mb={8}
       >
-        {/* Notification List on the right side for larger screens, above the form on smaller screens */}
         <Box flex={1} order={{ base: 1, md: 2 }}>
           <NotificationList />
         </Box>
 
-        {/* Profile Update Form */}
         <Box flex={2} order={{ base: 2, md: 1 }}>
           <Stack spacing={4} className="flex items-center justify-center">
             <FormControl id="firstName">

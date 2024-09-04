@@ -1,4 +1,3 @@
-// src/components/NotificationList.js
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchNotifications, markNotificationAsRead } from '../redux/notificationSlice';
@@ -7,14 +6,13 @@ import { Box, Text, Button, Spinner, Flex } from '@chakra-ui/react';
 const NotificationList = () => {
   const dispatch = useDispatch();
   const { notifications, loading } = useSelector((state) => state.notifications);
-  const token = localStorage.getItem('token'); // Fetch token from local storage
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
-    dispatch(fetchNotifications({ token })); // Pass token to thunk action
+    dispatch(fetchNotifications({ token }));
   }, [dispatch]);
 
   const handleMarkAsRead = (id) => {
-    // alert(id)
     dispatch(markNotificationAsRead({ id, token }));
   };
 

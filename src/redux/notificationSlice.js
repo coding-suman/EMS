@@ -1,12 +1,10 @@
-// src/redux/notificationSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../utils/axiosConfig';
 
-// Fetch notifications for the logged-in user
 export const fetchNotifications = createAsyncThunk('notifications/fetchNotifications', async ({ token }, { rejectWithValue }) => {
   try {
     const response = await axios.get('/notifications', {
-      headers: { Authorization: `Bearer ${token}` } // Add Authorization header
+      headers: { Authorization: `Bearer ${token}` }
     });
     return response.data;
   } catch (error) {
@@ -14,11 +12,10 @@ export const fetchNotifications = createAsyncThunk('notifications/fetchNotificat
   }
 });
 
-// Mark a notification as read
 export const markNotificationAsRead = createAsyncThunk('notifications/markAsRead', async ({ id, token }, { rejectWithValue }) => {
   try {
     await axios.put(`/notifications/${id}/read`, {}, {
-      headers: { Authorization: `Bearer ${token}` } // Add Authorization header
+      headers: { Authorization: `Bearer ${token}` }
     });
     return id;
   } catch (error) {

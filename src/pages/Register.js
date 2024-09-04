@@ -1,4 +1,3 @@
-// src/pages/Register.js
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -18,15 +17,13 @@ const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // Access Redux state for authentication
   const { user, token } = useSelector((state) => state.auth);
 
-  // Determine if the user is authenticated
   const isAuthenticated = !!token;
 
   useEffect(() => {
     if (isAuthenticated) {
-      // Redirect the user based on their role if they are already authenticated
+      
       if (user?.role === 'Admin') {
         navigate('/admin');
       } else {
@@ -39,16 +36,13 @@ const Register = () => {
     try {
       const response = await axios.post('auth/register', data);
 
-      // Store the token in local storage
       localStorage.setItem('user', JSON.stringify(response.data.user));
       localStorage.setItem('token', response.data.token);
 
-      // Dispatch login action to update Redux state
       dispatch(login(response.data));
 
       toast.success('Registered successfully!');
 
-      // Redirect to the dashboard
       navigate('/dashboard');
     } catch (error) {
       toast.error('Registration failed!');

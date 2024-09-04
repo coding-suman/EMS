@@ -1,16 +1,13 @@
 import * as yup from 'yup';
 
-// Login Form Validation Schema
 export const loginValidationSchema = yup.object().shape({
   email: yup.string().email('Invalid email format').required('Email is required'),
   password: yup.string().min(6, 'Password must be at least 6 characters long').required('Password is required'),
 });
 
-// Registration Form Validation Schema
 export const registerValidationSchema = yup.object().shape({
   firtname: yup.string().required('First name is required'),
   lastname: yup.string().required('Lats name is required'),
-  // username: yup.string().required('Username is required'),
   email: yup.string().email('Invalid email format').required('Email is required'),
   password: yup.string().min(6, 'Password must be at least 6 characters long').required('Password is required'),
   confirmPassword: yup.string()

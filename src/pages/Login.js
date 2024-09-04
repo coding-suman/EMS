@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { loginValidationSchema } from '../utils/validationSchemas';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../redux/authSlice';
-import axios from '../utils/axiosConfig';  // Use your configured Axios instance
+import axios from '../utils/axiosConfig';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,15 +12,13 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // Access Redux state for authentication
   const { user, token } = useSelector((state) => state.auth);
 
-  // Determine if the user is authenticated
   const isAuthenticated = !!token;
 
   useEffect(() => {
     if (isAuthenticated) {
-      // Redirect the user based on their role if they are already authenticated
+
       if (user?.role === 'Admin') {
         navigate('/admin');
       } else if (user?.role === 'Employee') {
@@ -36,17 +34,14 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       const response = await axios.post('auth/login', data);
-      
-      // Store user and token in localStorage
+
       localStorage.setItem('user', JSON.stringify(response.data.user));
       localStorage.setItem('token', response.data.token);
 
-      // Dispatch login action to update Redux state
       dispatch(login(response.data));
 
       toast.success('Logged in successfully!');
 
-      // Redirect based on role immediately after login
       if (response.data.user.role === 'Admin') {
         navigate('/admin');
       } else if (response.data.user.role === 'Employee') {
